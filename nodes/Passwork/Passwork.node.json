@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-base.passwork",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Security", "Secret storage"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://passwork.notion.site/API-4-313e9b08a56f4167bcb3fd47b82e84ff"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://passwork.notion.site/API-4-313e9b08a56f4167bcb3fd47b82e84ff"
+			}
+		]
+	}
+}
