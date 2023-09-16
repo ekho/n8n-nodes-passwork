@@ -17,7 +17,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
