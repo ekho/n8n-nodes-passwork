@@ -1,8 +1,10 @@
 import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { passworkApiCredentialsName } from '../../credentials/PassworkApi.credentials';
 import {
 	folderFields,
 	folderOperations,
 	folderResources,
+	searchVaults,
 	userFields,
 	userOperations,
 	userResources,
@@ -24,12 +26,12 @@ export class Passwork implements INodeType {
 		outputs: ['main'],
 		credentials: [
 			{
-				name: 'passworkApi',
+				name: passworkApiCredentialsName,
 				required: true,
 			},
 		],
 		requestDefaults: {
-			baseURL: '={{$credentials.endpoint.replace(new RegExp("/+$"), "")}}',
+			baseURL: '={{$credentials.baseUrl.replace(new RegExp("/+$"), "")}}',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -60,5 +62,10 @@ export class Passwork implements INodeType {
 		],
 	};
 
-	// The execute method will go here
+	methods = {
+		listSearch: {
+			// Provide workflows search capability for the workflow resourceLocator
+			searchVaults,
+		},
+	};
 }

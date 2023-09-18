@@ -1,4 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
+import { extractData } from './utils';
 
 export const userResources = [{ name: 'User', value: 'user' }];
 
@@ -52,6 +53,9 @@ export const userOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '/user/info',
 					},
+					output: {
+						postReceive: [extractData],
+					},
 				},
 			},
 			{
@@ -63,6 +67,9 @@ export const userOperations: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '/user/notifications/count-new',
+					},
+					output: {
+						postReceive: [extractData],
 					},
 				},
 			},
@@ -76,6 +83,9 @@ export const userOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '/user/notifications',
 					},
+					output: {
+						postReceive: [extractData],
+					},
 				},
 			},
 			{
@@ -87,6 +97,9 @@ export const userOperations: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/auth/logout',
+					},
+					output: {
+						postReceive: [extractData],
 					},
 				},
 			},

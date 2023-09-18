@@ -7,6 +7,8 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
+export const passworkApiCredentialsName = 'passworkApi';
+
 type AuthLoginResponse = {
 	status: string;
 	data: {
@@ -27,7 +29,7 @@ type AuthLoginResponse = {
 export class PassworkApi implements ICredentialType {
 	displayName = 'Passwork API';
 	documentationUrl = 'https://passwork.notion.site/API-4-313e9b08a56f4167bcb3fd47b82e84ff';
-	name = 'passworkApi';
+	name = passworkApiCredentialsName;
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Session Token',
@@ -40,8 +42,8 @@ export class PassworkApi implements ICredentialType {
 			default: '',
 		},
 		{
-			displayName: 'API endpoint',
-			name: 'endpoint',
+			displayName: 'API base url',
+			name: 'baseUrl',
 			type: 'string',
 			default: 'https://passwork.me/api/v4',
 		},
@@ -57,7 +59,7 @@ export class PassworkApi implements ICredentialType {
 	async preAuthentication(this: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject) {
 		const response = (await this.helpers.httpRequest({
 			method: 'POST',
-			baseURL: credentials.endpoint as string,
+			baseURL: credentials.baseUrl as string,
 			url: `/auth/login/${credentials.apiKey}`,
 		})) as AuthLoginResponse;
 
@@ -69,7 +71,7 @@ export class PassworkApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			method: 'GET',
-			baseURL: '={{$credentials.endpoint}}',
+			baseURL: '={{$credentials.baseUrl}}',
 			url: '/user/info',
 		},
 	};
@@ -83,3 +85,8 @@ export class PassworkApi implements ICredentialType {
 		},
 	};
 }
+
+export type PassworkApiCredentials = {
+	apiKey: string;
+	baseUrl: string;
+};
