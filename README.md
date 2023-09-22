@@ -42,11 +42,11 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ### Passwords
 - [ ] Add
-- [ ] Get
+- [x] Get
 - [ ] Edit
 - [ ] Delete
 - [ ] Add attachment
-- [ ] Get attachment
+- [x] Get attachment
 - [ ] Delete attachment
 - [ ] Copy
 - [ ] Favorite
@@ -109,4 +109,5 @@ TBD
 * 0.1.0 - alpha. Not usable
 * 0.1.1 - aplha. Minor fixes
 * 0.2.0 - beta. Some methods to work with folders
+* 0.3.0 - beta. Added methods Password Get and Password Get Attachment
 
