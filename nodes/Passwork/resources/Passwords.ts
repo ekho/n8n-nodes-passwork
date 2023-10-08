@@ -40,8 +40,7 @@ export const passwordFields: INodeProperties[] = [
 ];
 
 // TODO: implement master-password
-const bas64decode = (src: string) =>
-	Buffer.alloc((src as string).length, src as string, 'base64').toString('utf-8');
+const base64decode = (src: string) => Buffer.from(src, 'base64').toString('utf-8');
 
 const decryptPassword: PostReceiveAction = async function (
 	this: IExecuteSingleFunctions,
@@ -49,12 +48,12 @@ const decryptPassword: PostReceiveAction = async function (
 ) {
 	return items.map((item) => {
 		const data = item.json.data as Password;
-		data.password = bas64decode(data.cryptedPassword);
+		data.password = base64decode(data.cryptedPassword);
 		if (data.custom && data.custom.length) {
 			data.custom.forEach((cf) => {
-				cf.name = bas64decode(cf.name);
-				cf.type = bas64decode(cf.type);
-				cf.value = bas64decode(cf.value);
+				cf.name = base64decode(cf.name);
+				cf.type = base64decode(cf.type);
+				cf.value = base64decode(cf.value);
 			});
 		}
 		return item;
@@ -67,9 +66,9 @@ const decryptAttachment: PostReceiveAction = async function (
 ) {
 	return items.map((item) => {
 		const data = item.json.data as PasswordAttachment;
-		data.encryptedKey = bas64decode(data.encryptedKey);
+		data.encryptedKey = base64decode(data.encryptedKey);
 
-		const byteCharacters = abab.atob(bas64decode(data.encryptedData)) as string;
+		const byteCharacters = abab.atob(base64decode(data.encryptedData)) as string;
 
 		// turned off because of fail
 		// if (sha256.hex(byteCharacters) !== data.hash) {
