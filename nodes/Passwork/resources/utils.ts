@@ -11,12 +11,23 @@ export const extractData: PostReceiveAction = async function (
 ) {
 	const fullResult = this.getNodeParameter('fullResult') as boolean;
 
-	if (!fullResult) {
-		items = items.map((item) => {
-			item.json = item.json.data as IDataObject;
-			return item;
-		});
+	if (fullResult) {
+		return items;
 	}
 
-	return items;
+	const innerItems: INodeExecutionData[] = [];
+
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
+
+		if (item.json.data instanceof Array) {
+			innerItems.push(
+				...(item.json.data as IDataObject[]).map((json) => ({ json, pairedItem: { item: i } })),
+			);
+		} else {
+			innerItems.push(item);
+		}
+	}
+
+	return innerItems;
 };
