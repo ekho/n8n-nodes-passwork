@@ -11,8 +11,6 @@ export const extractData: PostReceiveAction = async function (
 ) {
 	const rawResult = this.getNodeParameter('rawResult') as boolean;
 
-	console.log({ rawResult });
-
 	if (rawResult) {
 		return items;
 	}
