@@ -58,8 +58,8 @@ export class Passwork implements INodeType {
 			...passwordOperations,
 			...passwordFields,
 			{
-				displayName: 'Full Result',
-				name: 'fullResult',
+				displayName: 'Raw Result',
+				name: 'rawResult',
 				type: 'boolean',
 				placeholder: '',
 				default: false,

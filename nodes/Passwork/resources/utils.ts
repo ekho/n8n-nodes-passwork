@@ -9,24 +9,23 @@ export const extractData: PostReceiveAction = async function (
 	this: IExecuteSingleFunctions,
 	items: INodeExecutionData[],
 ) {
-	const fullResult = this.getNodeParameter('fullResult') as boolean;
+	const rawResult = this.getNodeParameter('rawResult') as boolean;
 
-	if (fullResult) {
+	console.log({ rawResult });
+
+	if (rawResult) {
 		return items;
 	}
 
 	const innerItems: INodeExecutionData[] = [];
 
 	for (let i = 0; i < items.length; i++) {
-		const item = items[i];
+		const itemsData =
+			items[i].json.data instanceof Array
+				? (items[i].json.data as IDataObject[])
+				: [items[i].json.data as IDataObject];
 
-		if (item.json.data instanceof Array) {
-			innerItems.push(
-				...(item.json.data as IDataObject[]).map((json) => ({ json, pairedItem: { item: i } })),
-			);
-		} else {
-			innerItems.push(item);
-		}
+		innerItems.push(...itemsData.map((json) => ({ json, pairedItem: { item: i } })));
 	}
 
 	return innerItems;
